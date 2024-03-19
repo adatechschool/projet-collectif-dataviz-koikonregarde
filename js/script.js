@@ -25,6 +25,12 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
     document.getElementById('movieJacket').src = IMG_URL + movie.poster_path;
     document.getElementById('movieName').textContent = movie.title;
     document.getElementById('movieResume').textContent = movie.overview;
+
+    document.querySelector('#stream').addEventListener('click', async () => {
+    let url = `https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}`
+    document.querySelector('#stream').setAttribute('href',url);
+
+  })
   } catch (err) {
     console.error(err);
   }
@@ -40,3 +46,5 @@ async function fetchMoviesByGenre(genreId) {
   let data = await response.json();
   return data.results.slice(0,1);
 }
+
+
