@@ -32,7 +32,7 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
 
 async function fetchMoviesByGenre(genreId) {
   let minResult = 1;
-  let maxResult = 20;
+  let maxResult = 50;
   minResult = Math.ceil(minResult);
   maxResult = Math.floor(maxResult);
   let randomNumb = Math.floor(Math.random() * (maxResult - minResult +1)) + minResult;
