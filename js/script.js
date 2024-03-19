@@ -24,11 +24,13 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
 
     console.log(genreMovies);
     const movie = genreMovies[0];
+    const year = movie.release_date.slice(0, 4);
 
+    console.log(year);
     document.getElementById('movieJacket').src = IMG_URL + movie.poster_path;
     document.getElementById('movieName').textContent = movie.title;
     document.getElementById('movieResume').textContent = movie.overview;
-
+    document.getElementById('movieYear').textContent = year;
     const movieCredits = await fetchMovieCredits(movie.id);
     console.log(movieCredits);
 
@@ -42,7 +44,6 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
     for(let i=0; i<5;i++){
      let cast2 = cast[i];
     actors.push(' ' + cast2.name);
-     console.log(actors);
     }
     document.getElementById('cast').textContent = 'Cast by : ' + actors ;
 
@@ -51,7 +52,7 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
       let crew2 = crew[i];
       if(crew2.job == "Director"){
         crew2 = crew2.name;
-        document.getElementById('movieDirector').textContent = 'directed by : ' + crew2 ;
+        document.getElementById('movieDirector').textContent = 'Directed by : ' + crew2 ;
       }
 
     }
