@@ -26,10 +26,33 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
     document.getElementById('movieName').textContent = movie.title;
     document.getElementById('movieResume').textContent = movie.overview;
 
+    let movieCredits = await fetchMovieCredits(movie.id);
+    console.log(movieCredits);
+    const cast = movieCredits.cast;
+    const crew = movieCredits.crew;
+    console.log(cast);
+    console.log(crew);
+    for(let i=0; i<5;i++){
+      let cast2 = cast[i];
+      cast2 = cast2.name;
+      document.getElementById('cast').textContent += cast2 + ', ' ;
+
+    }
+
+    for(let i=0; i<crew.length; i++){
+      let crew2 = crew[i];
+      console.log(crew2.job);
+      if(crew2.job == "Director"){
+        console.log("ping")
+        crew2 = crew2.name;
+        document.getElementById('movieDirector').textContent += crew2 + ', ' ;
+      }
+    }
+
+
     document.querySelector('#stream').addEventListener('click', async () => {
     let url = `https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}`
     document.querySelector('#stream').setAttribute('href',url);
-
   })
   } catch (err) {
     console.error(err);
@@ -47,4 +70,15 @@ async function fetchMoviesByGenre(genreId) {
   return data.results.slice(0,1);
 }
 
+async function fetchMovieCredits(movieId){
+  let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options)
+  let data = await response.json();
+  return data;
+}
+  // fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options)
+  // .then(response => response.json())
+  // .then(response => console.log(response))
+  // let responseCredits = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US`, options);
+  // let dataCredits = await response.json();
+  // console.log(dataCredits);
 
