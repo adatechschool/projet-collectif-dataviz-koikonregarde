@@ -12,6 +12,35 @@ const options = {
   }
 };
 
+//fonction qui va chercher un film aléatoirement
+async function fetchMoviesByGenre(genreId) {
+  let minResult = 1;
+  let maxResult = 30;
+  minResult = Math.ceil(minResult);
+  maxResult = Math.floor(maxResult);
+  let randomNumb = Math.floor(Math.random() * (maxResult - minResult +1)) + minResult;
+  let response = await fetch(BASE_URL + 'discover/movie?api_key=' + API_KEY + '&with_genres=' + genreId + '&sort_by=top-rated.desc&page='+ randomNumb);
+  let data = await response.json();
+  return data.results.slice(0,1);
+}
+
+
+//fonction qui va chercher les crédits du film
+async function fetchMovieCredits(movieId){
+  let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options)
+  let data = await response.json();
+  return data;
+}
+
+
+//fonction qui va chercher les traductions du film
+async function fetchMovieLanguages(movieId){
+  let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/translations`, options)
+  let data = await response.json();
+  return data;
+}
+
+
 ////////////////////////
 //écoute du bouton pour lancer le premier film aleatoire
 document.querySelector('#random-genre').addEventListener('click', async () => {
@@ -26,6 +55,7 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
 
     //on récupère les traductions possibles du film
     let languageMovie = await fetchMovieLanguages(movie.id);
+    console.log(languageMovie)
     let language = languageMovie.translations;
     //on créé la boucle pour trouver la langue FR
     for(let i=0; i<language.length; i++){ 
@@ -91,12 +121,11 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
     document.querySelector('#stream').setAttribute('href',url); 
   })
 
-  const titleFormat = await movieTitleFormat(movie.title);
-  console.log(typeof titleFormat);
-
+  // const titleFormat = await movieTitleFormat(movie.title);
+  // console.log(typeof titleFormat);
 
   document.querySelector('#JustWatch').addEventListener('click', async () => {
-    let url = `https://www.themoviedb.org/movie/${movie.id}-${titleFormat}/watch?language=fr`
+    let url = `https://www.themoviedb.org/movie/${movie.id}/watch?language=fr`
     document.querySelector('#JustWatch').setAttribute('href',url); 
   })
   //on gère les erreurs de base
@@ -106,40 +135,11 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
 
 });
 
+// let regex = /[',./-:_(){}?!§£$&"'=*@]/g
 
-//fonction qui va chercher un film aléatoirement
-async function fetchMoviesByGenre(genreId) {
-  let minResult = 1;
-  let maxResult = 50;
-  minResult = Math.ceil(minResult);
-  maxResult = Math.floor(maxResult);
-  let randomNumb = Math.floor(Math.random() * (maxResult - minResult +1)) + minResult;
-  let response = await fetch(BASE_URL + 'discover/movie?api_key=' + API_KEY + '&with_genres=' + genreId + '&sort_by=top-rated.desc&page='+ randomNumb);
-  let data = await response.json();
-  return data.results.slice(0,1);
-}
+// async function movieTitleFormat(movieTitle){
+//   let titleFormat = movieTitle.normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(" ").splice(0,6).join(" ").replaceAll(regex, '').split(" ").join("-").toLowerCase()
+//   console.log(titleFormat);
 
-
-//fonction qui va chercher les crédits du film
-async function fetchMovieCredits(movieId){
-  let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options)
-  let data = await response.json();
-  return data;
-}
-
-
-//fonction qui va chercher les traductions du film
-async function fetchMovieLanguages(movieId){
-  let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/translations`, options)
-  let data = await response.json();
-  return data;
-}
-
-let regex = /[',./-:_(){}?!§£$&"'=*@]/g
-
-async function movieTitleFormat(movieTitle){
-  let titleFormat = movieTitle.normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(" ").splice(0,6).join(" ").replaceAll(regex, '').split(" ").join("-").toLowerCase()
-  console.log(titleFormat);
-
-  return titleFormat;
-}
+//   return titleFormat;
+// }
