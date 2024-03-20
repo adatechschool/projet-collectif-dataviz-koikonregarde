@@ -41,8 +41,10 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
       //si le titre ou le synopsis sont vide, alors on va afficher le titre ou le résumé original
       if(languageTitle.length === 0){
         document.getElementById('movieName').textContent = movie.title;
+        // let movieTitle = movie.title;
       }else{
         document.getElementById('movieName').textContent = languageTitle;
+        // movieTitle = languageTitle;
       } 
       if(languageOverview.length === 0){
         document.getElementById('movieResume').textContent = movie.overview;
@@ -54,6 +56,8 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
       }else{
         document.getElementById('movieName').textContent = movie.title;
         document.getElementById('movieResume').textContent = movie.overview;
+        // let movieTitle = movie.title;
+
       }
     }
     //on affiche le poster et l'année de sortie
@@ -85,6 +89,15 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
     document.querySelector('#stream').addEventListener('click', async () => {
     let url = `https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}`
     document.querySelector('#stream').setAttribute('href',url); 
+  })
+
+  const titleFormat = await movieTitleFormat(movie.title);
+  console.log(typeof titleFormat);
+
+
+  document.querySelector('#JustWatch').addEventListener('click', async () => {
+    let url = `https://www.themoviedb.org/movie/${movie.id}-${titleFormat}/watch?language=fr`
+    document.querySelector('#JustWatch').setAttribute('href',url); 
   })
   //on gère les erreurs de base
   } catch (err) {
@@ -120,4 +133,13 @@ async function fetchMovieLanguages(movieId){
   let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/translations`, options)
   let data = await response.json();
   return data;
+}
+
+let regex = /[',./-:_(){}?!§£$&"'=*@]/g
+
+async function movieTitleFormat(movieTitle){
+  let titleFormat = movieTitle.normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(" ").splice(0,6).join(" ").replaceAll(regex, '').split(" ").join("-").toLowerCase()
+  console.log(titleFormat);
+
+  return titleFormat;
 }
