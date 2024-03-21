@@ -34,9 +34,11 @@ a{
 
 #btn1{
 
-    left: 50%;
-    position: absolute;
-    transform: translate(-100%, 80%);
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-top: 2%;
+  position: absolute;
+  
 
   font-family: "Oen Sans", sans-serif;
   font-size: 16px;
@@ -70,11 +72,10 @@ a{
     max-height: 70rem;
 
     position: absolute;
-    left: auto;
-    right: auto;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
+    margin-left: 33%;
+    margin-right: 33%;
+    top: 20%;
+    bottom: auto;
 }
 
 .image-container{
