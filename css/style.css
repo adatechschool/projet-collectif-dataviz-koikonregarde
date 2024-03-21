@@ -1,0 +1,240 @@
+:root {
+    --lh: 1.6rem;
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+a{
+    text-decoration: none
+}
+
+#btn1{
+
+    left: 50%;
+    position: absolute;
+    transform: translate(-100%, 80%);
+
+  font-family: "Oen Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+}
+
+#btn1:active {
+  box-shadow: 0px 0px 0px 0px;
+ 
+}
+
+@media (min-width: 768px) {
+  #btn1 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+/* toute la jaquette */
+
+.wrapper{
+    display: flex;
+    width: 500%;
+    max-width: 37em;
+    max-height: 70rem;
+
+    position: absolute;
+    left: auto;
+    right: auto;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.image-container{
+    width: 400px;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img{
+    width: 100%;
+    display:block;
+    margin: auto;
+    border-radius: 2em;
+}
+.content{
+    border-radius: 2em;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    position: absolute;
+    padding: 0rem;
+    background: rgba(31, 27, 30, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: 0.6s;
+    box-shadow: 0 1em 2em rgb(57, 27, 27);
+}
+.content:hover{
+    opacity: 1;
+}
+.content h2{
+    font-size: 30px;
+    color: #E0DFD6;
+    margin: -1rem;
+    padding: 10px 50px 20px;
+    text-align: center;
+}
+.content h3{
+    font-size: 25px;
+    color: #E0DFD6;
+    margin: 1rem;
+    padding: 10px 50px 20px;
+    text-align: center;
+}
+.content h4{
+    font-size: 20px;
+    color: #E0DFD6;
+    text-align: center;
+    padding: 10px 50px 20px;
+    padding: -1rem;
+}
+.content p{
+    font-size: 16px;
+    color: #E0DFD6;
+    margin-bottom: -1rem;
+    padding: 1rem;
+    padding: 10px 50px 20px;
+    text-align: center;
+}
+
+#movieResume {
+    --max-lines: 2;
+    position: relative;
+    max-height: calc(var(--lh) * var(--max-lines));
+    overflow: hidden;
+  }
+
+
+/* Les boutons du bas. */
+
+#stream{
+    
+    left: 75%;
+    position: absolute;
+    transform: translate(-100%, 20%);
+    appearance: button;
+    background-color: #000;
+    background-image: none;
+    border: 1px solid #000;
+    border-radius: 4px;
+    box-shadow: #fff 4px 4px 0 0,#000 4px 4px 0 1px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    
+    font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0 5px 10px 0;
+    overflow: visible;
+    padding: 12px 40px;
+    text-align: center;
+    text-transform: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#JustWatch {
+    left: 30%;
+    position: absolute;
+    transform: translate(-100%, 20%);
+display: inline-block;
+
+  appearance: button;
+  background-color: #000;
+  background-image: none;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: #fff 4px 4px 0 0,#000 4px 4px 0 1px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  
+  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 5px 10px 0;
+  overflow: visible;
+  padding: 12px 40px;
+  text-align: center;
+  text-transform: none;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+#JustWatch:focus, #stream:focus {
+  text-decoration: none;
+}
+
+#JustWatch:hover, #stream:hover {
+  text-decoration: none;
+}
+
+#JustWatch:active, #stream:active {
+  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+  outline: 0;
+}
+
+#JustWatch:not([disabled]):active, #stream:not([disabled]):active  {
+  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+}
+
+@media (min-width: 768px) {
+    #JustWatch, #stream {
+    padding: 12px 50px;
+  }
+}
+

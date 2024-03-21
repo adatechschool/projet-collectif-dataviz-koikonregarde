@@ -43,7 +43,7 @@ async function fetchMovieLanguages(movieId){
 
 ////////////////////////
 //écoute du bouton pour lancer le premier film aleatoire
-document.querySelector('#random-genre').addEventListener('click', async () => {
+document.querySelector('#btn1').addEventListener('click', async () => {
   try {
     let response = await fetch(BASE_URL + 'genre/movie/list?api_key=' + API_KEY, options);
     let data = await response.json();
@@ -52,6 +52,25 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
     let genreMovies = await fetchMoviesByGenre(randomGenre.id);
     const movie = genreMovies[0];
     const year = movie.release_date.slice(0, 4);
+
+
+    //on ajoute tout le HTML du site au clic
+    document.getElementById('nfo').innerHTML = `<div class="image-container">
+    <img id="movieJacket" src="">
+<div class="content">
+    <h2 id="movieName"></h2>
+    <p id="movieYear"></p>
+    <h3 id="movieDirector"></h3>
+    <h4 id="cast"></h4>
+    <p id="movieResume"></p> 
+</div>    
+</div>    
+<div id="secondaryBtn">
+    <a id="stream" href="" target="_blank" >Voir le film !</a>
+    <a id="JustWatch" href="" target="_blank" >Ou voir le film ?</a>
+</div>`
+
+
 
     //on récupère les traductions possibles du film
     let languageMovie = await fetchMovieLanguages(movie.id);
@@ -104,14 +123,14 @@ document.querySelector('#random-genre').addEventListener('click', async () => {
      let cast2 = cast[i];
     actors.push(' ' + cast2.name);
     }
-    document.getElementById('cast').textContent = 'Cast by : ' + actors ;
+    document.getElementById('cast').textContent = 'Avec : ' + actors ;
 
     //on boucle pour trouver le réalisateur du film et l'afficher
     for(let i=0; i<crew.length; i++){
       let crew2 = crew[i];
       if(crew2.job == "Director"){
         crew2 = crew2.name;
-        document.getElementById('movieDirector').textContent = 'Directed by : ' + crew2 ;
+        document.getElementById('movieDirector').textContent = 'Réalisé par : ' + crew2 ;
       }
 
     }
