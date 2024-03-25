@@ -12,6 +12,56 @@ const options = {
   }
 };
 
+(function ( $ ) {
+
+	$.fn.grtyoutube = function( options ) {
+
+		return this.each(function() {
+
+			// Get video ID
+			var getvideoid = $(this).attr("youtubeid");
+
+			// Default options
+			var settings = $.extend({
+				videoID: getvideoid,
+				autoPlay: true,
+				theme: "dark"
+			}, options );
+
+			// Convert some values
+			if(settings.autoPlay === true) { settings.autoPlay = 1 } else if(settings.autoPlay === false)  { settings.autoPlay = 0 }
+			if(settings.theme === "dark") { settings.theme = "grtyoutube-dark-theme" } else if(settings.theme === "light")  { settings.theme = "grtyoutube-light-theme" }
+
+			// Initialize on click
+			if(getvideoid) {
+				$(this).on( "click", function() {
+					 $("body").append('<div class="grtyoutube-popup '+settings.theme+'">'+
+								'<div class="grtyoutube-popup-content">'+
+									'<span class="grtyoutube-popup-close"></span>'+
+									'<iframe class="grtyoutube-iframe" src="https://www.youtube.com/embed/'+settings.videoID+'?rel=0&wmode=transparent&autoplay='+settings.autoPlay+'&iv_load_policy=3" allowfullscreen frameborder="0" allow="autoplay; fullscreen"></iframe>'+
+								'</div>'+
+							'</div>');
+				});
+			}
+
+			// Close the box on click or escape
+			$(this).on('click', function (event) {
+				event.preventDefault();
+				$(".grtyoutube-popup-close, .grtyoutube-popup").click(function(){
+					$(".grtyoutube-popup").remove();
+				});
+			});
+
+			$(document).keyup(function(event) {
+				if (event.keyCode == 27){
+					$(".grtyoutube-popup").remove();
+				}
+			});
+		});
+	};
+
+}( jQuery ));
+
 //fonction qui va chercher un film aléatoirement
 async function fetchMoviesByGenre(genreId) {
   let minResult = 1;
@@ -23,7 +73,6 @@ async function fetchMoviesByGenre(genreId) {
   let data = await response.json();
   return data.results.slice(0,1);
 }
-
 
 //fonction qui va chercher les crédits du film
 async function fetchMovieCredits(movieId){
@@ -40,6 +89,12 @@ async function fetchMovieLanguages(movieId){
   return data;
 }
 
+   //on récupère le trailer
+async function fetchMovieTrailer(movieId){
+  let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`, options)
+  let data = await response.json();
+  return data;
+}
 
 ////////////////////////
 //écoute du bouton pour lancer le premier film aleatoire
@@ -53,8 +108,21 @@ document.querySelector('#btn1').addEventListener('click', async () => {
     const movie = genreMovies[0];
     const year = movie.release_date.slice(0, 4);
 
+    const movieTrailer = await fetchMovieTrailer(movie.id);
+    let trailer = movieTrailer.results;
+   
+    for(let i=0; i<trailer.length; i++){
+      let trailer2 = trailer[i];
+      if(trailer2.type == "Trailer"){
+        trailer = trailer2.key;    
+        }
+    }
 
-    //on ajoute tout le HTML du site au clic
+  async function videoSearchNotation(movieID){
+    let response = await fetch('')
+
+  }
+
     document.getElementById('nfo').innerHTML = `<div class="image-container">
     <img id="movieJacket" src="">
 <div class="content">
@@ -62,19 +130,23 @@ document.querySelector('#btn1').addEventListener('click', async () => {
     <p id="movieYear"></p>
     <h3 id="movieDirector"></h3>
     <h4 id="cast"></h4>
-    <p id="movieResume"></p> 
+    <p id="movieResume"></p>
+    <div id="movieTrailer"><span class="youtube-link" youtubeid="${trailer}">voir le trailer</span></div>
+
 </div>    
 </div>    
 <div id="secondaryBtn">
-    <a id="stream" href="" target="_blank" >Voir le film !</a>
-    <a id="JustWatch" href="" target="_blank" >Ou voir le film ?</a>
+    <a id="stream" href="https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}" target="_blank" ><span >Voir le film !</span></a>
+    <a id="JustWatch" href="https://www.themoviedb.org/movie/${movie.id}/watch?language=fr" target="_blank" ><span>Ou voir le film ?</span></a>
 </div>`
 
 
+$(".youtube-link").grtyoutube(); 
 
+    //on ajoute tout le HTML du site au clic
+    
     //on récupère les traductions possibles du film
     let languageMovie = await fetchMovieLanguages(movie.id);
-    console.log(languageMovie)
     let language = languageMovie.translations;
     //on créé la boucle pour trouver la langue FR
     for(let i=0; i<language.length; i++){ 
@@ -113,6 +185,7 @@ document.querySelector('#btn1').addEventListener('click', async () => {
     document.getElementById('movieJacket').src = IMG_URL + movie.poster_path;
     document.getElementById('movieYear').textContent = year;
 
+ 
     //on récupère les informations de casting et d'équipe
     const movieCredits = await fetchMovieCredits(movie.id);
     const cast = movieCredits.cast;
@@ -134,25 +207,27 @@ document.querySelector('#btn1').addEventListener('click', async () => {
       }
 
     }
-    //on créé le lien pour le bouton pour rediriger vers la plateforme de streaming movie-web
-    document.querySelector('#stream').addEventListener('click', async () => {
-    let url = `https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}`
-    document.querySelector('#stream').setAttribute('href',url); 
-  })
 
-  // const titleFormat = await movieTitleFormat(movie.title);
-  // console.log(typeof titleFormat);
 
-  document.querySelector('#JustWatch').addEventListener('click', async () => {
-    let url = `https://www.themoviedb.org/movie/${movie.id}/watch?language=fr`
-    document.querySelector('#JustWatch').setAttribute('href',url); 
-  })
   //on gère les erreurs de base
   } catch (err) {
     console.error(err);
   }
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // let regex = /[',./-:_(){}?!§£$&"'=*@]/g
 
