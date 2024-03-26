@@ -1,5 +1,4 @@
-///////////////////////
-//initialisation de notre KEY et site de base
+//initialisations pour les connexions à l'API
 const API_KEY = '3753c6e85bd59d368a602fd60fc98864';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
@@ -12,6 +11,7 @@ const options = {
   }
 };
 
+//fonction popup youtube
 (function ( $ ) {
 
 	$.fn.grtyoutube = function( options ) {
@@ -59,7 +59,6 @@ const options = {
 			});
 		});
 	};
-
 }( jQuery ));
 
 //fonction qui va chercher un film aléatoirement
@@ -89,25 +88,27 @@ async function fetchMovieLanguages(movieId){
   return data;
 }
 
-   //on récupère le trailer
+//on récupère le trailer
 async function fetchMovieTrailer(movieId){
   let response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`, options)
   let data = await response.json();
   return data;
 }
 
-////////////////////////
-//écoute du bouton pour lancer le premier film aleatoire
+
+//fonction qui va tout lancer au clic du bouton
 document.querySelector('#btn1').addEventListener('click', async () => {
   try {
     let response = await fetch(BASE_URL + 'genre/movie/list?api_key=' + API_KEY, options);
     let data = await response.json();
     let randomGenre = data.genres[Math.floor(Math.random() * data.genres.length)];
+   
     //on récupère le film aléatoire
     let genreMovies = await fetchMoviesByGenre(randomGenre.id);
     const movie = genreMovies[0];
     const year = movie.release_date.slice(0, 4);
 
+    //on récupère la clé youtube du trailer
     const movieTrailer = await fetchMovieTrailer(movie.id);
     let trailer = movieTrailer.results;
    
@@ -118,47 +119,41 @@ document.querySelector('#btn1').addEventListener('click', async () => {
         }
     }
 
-  async function videoSearchNotation(movieID){
-    let response = await fetch('')
-
-  }
-
+    //on ajoute tout le HTML du site
     document.getElementById('nfo').innerHTML = `<div class="image-container">
-    <img id="movieJacket" src="">
-<div class="content">
-    <h2 id="movieName"></h2>
-    <p id="movieYear"></p>
-    <h3 id="movieDirector"></h3>
-    <h4 id="cast"></h4>
-    <p id="movieResume"></p>
-    <div id="movieTrailer"><span class="youtube-link" youtubeid="${trailer}">voir le trailer</span></div>
+          <img id="movieJacket" src="">
+      <div class="content">
+          <h2 id="movieName"></h2>
+          <p id="movieYear"></p>
+          <h3 id="movieDirector"></h3>
+          <h4 id="cast"></h4>
+          <p id="movieResume"></p>
+          <div id="movieTrailer"><span class="youtube-link" youtubeid="${trailer}">voir le trailer</span></div>
+      </div>    
+      </div>    
+      <audio autoplay="true" src="/media/sound-effect.mp3" volume="10"></audio>
 
-</div>    
-</div>    
-<div id="secondaryBtn">
-    <a id="stream" href="https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}" target="_blank" ><span >Voir le film !</span></a>
-    <a id="JustWatch" href="https://www.themoviedb.org/movie/${movie.id}/watch?language=fr" target="_blank" ><span>Ou voir le film ?</span></a>
-</div>`
+      <div id="secondaryBtn">
+          <a id="stream" href="https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}" target="_blank" ><span >Voir le film !</span></a>
+          <a id="JustWatch" href="https://www.themoviedb.org/movie/${movie.id}/watch?language=fr" target="_blank" ><span>Ou voir le film ?</span></a>
+      </div>`
 
-
-$(".youtube-link").grtyoutube(); 
-
-    //on ajoute tout le HTML du site au clic
-    
+    //appel de la fonction pour la popup de youtube
+    $(".youtube-link").grtyoutube(); 
+ 
     //on récupère les traductions possibles du film
     let languageMovie = await fetchMovieLanguages(movie.id);
     let language = languageMovie.translations;
+
     //on créé la boucle pour trouver la langue FR
     for(let i=0; i<language.length; i++){ 
       let language2 = language[i];
       //si langue FR trouvée, alors on va prendre le titre et le résumé du film
-      if(language2.iso_3166_1 == "FR"){
-      
+      if(language2.iso_3166_1 == "FR"){ 
         let languageTitle = language2.data;
         languageTitle=languageTitle.title;
         let languageOverview = language2.data;
         languageOverview=languageOverview.overview;
-
       //si le titre ou le synopsis sont vide, alors on va afficher le titre ou le résumé original
       if(languageTitle.length === 0){
         document.getElementById('movieName').textContent = movie.title;
@@ -178,9 +173,9 @@ $(".youtube-link").grtyoutube();
         document.getElementById('movieName').textContent = movie.title;
         document.getElementById('movieResume').textContent = movie.overview;
         // let movieTitle = movie.title;
-
       }
     }
+
     //on affiche le poster et l'année de sortie
     document.getElementById('movieJacket').src = IMG_URL + movie.poster_path;
     document.getElementById('movieYear').textContent = year;
@@ -197,7 +192,6 @@ $(".youtube-link").grtyoutube();
     actors.push(' ' + cast2.name);
     }
     document.getElementById('cast').textContent = 'Avec : ' + actors ;
-
     //on boucle pour trouver le réalisateur du film et l'afficher
     for(let i=0; i<crew.length; i++){
       let crew2 = crew[i];
@@ -205,29 +199,13 @@ $(".youtube-link").grtyoutube();
         crew2 = crew2.name;
         document.getElementById('movieDirector').textContent = 'Réalisé par : ' + crew2 ;
       }
-
     }
-
 
   //on gère les erreurs de base
   } catch (err) {
     console.error(err);
   }
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // let regex = /[',./-:_(){}?!§£$&"'=*@]/g
 
