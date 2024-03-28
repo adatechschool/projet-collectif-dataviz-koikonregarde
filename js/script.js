@@ -134,9 +134,10 @@ document.querySelector('#btn1').addEventListener('click', async () => {
       <audio autoplay="true" src="/media/sound-effect.mp3" volume="10"></audio>
 
       <div id="secondaryBtn">
-          <a id="stream" href="https://movie-web-me.vercel.app/#/media/tmdb-movie-${movie.id}" target="_blank" ><span >Voir le film !</span></a>
+          <a id="stream" href="https://movies.fmeee.ovh/#/media/tmdb-movie-${movie.id}" target="_blank" ><span >Voir le film !</span></a>
           <a id="JustWatch" href="https://www.themoviedb.org/movie/${movie.id}/watch?language=fr" target="_blank" ><span>Ou voir le film ?</span></a>
-      </div>`
+      </div>
+      <p>Projet étudiant créé par Antoine Rogé-Picard, Pauline Taillemite et Timothée Terrassier.</p>`
 
     //appel de la fonction pour la popup de youtube
     $(".youtube-link").grtyoutube(); 

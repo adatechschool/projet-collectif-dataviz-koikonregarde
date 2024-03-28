@@ -108,6 +108,15 @@ a span {
   z-index: 99;
 }
 
+p {
+  text-align: center;
+  color: white;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 7px;
+  opacity : 0.5;
+  padding-top : 15px;
+}
 /* toute la jaquette */
 .wrapper{
   max-width: 37em;
