@@ -1,241 +1,258 @@
+@import url(/css/mix.css);
+
 :root {
-    --lh: 1.6rem;
-  }
+  --lh: 1.6rem;
+}
 
 *{
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin : 0;
+  padding : 0;
 }
 
-body {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
+body{
+  background: black;
+
 }
 
-
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+#background{
+  width: 1200px;
+  padding: 89px 0;
+  background :#000000;
 }
 
-a{
-    text-decoration: none
+/*effet de background*/
+
+
+.outer-scratch, .inner-scratch {
+  height: inherit;
+}
+
+.outer-scratch:after, .inner-scratch:after {
+  content: '';
+  top: 0;
+  left: 0;
+  padding-left: 100px;
+  opacity: .08;
+  -webkit-animation: scratch 0.45s steps(1) infinite;
+  animation: scratch 0.45s steps(1) infinite;
+}
+
+.inner-scratch:after {
+  left: 30%;
+  -webkit-animation: inner-scratch 2s infinite;
+  animation: inner-scratch 2s infinite;
+}
+
+.grain:after {
+  content: '';
+  width: 110%;
+  height: 110%;
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  opacity: .21;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/662025/grain.jpg') repeat center center;
+  -webkit-animation: grain 0.5s steps(1) infinite;
+  animation: grain 0.5s steps(1) infinite;
 }
 
 #btn1{
-
-  margin-left: 40%;
-  margin-right: 40%;
-  margin-top: 2%;
-  position: absolute;
+      font-size: 20px;
+      align-items: center;
+      display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+    background-color: #000000;
+    border: none;
+    cursor: pointer;
   
-
-  font-family: "Oen Sans", sans-serif;
-  font-size: 16px;
-  letter-spacing: 2px;
-  text-decoration: none;
-  text-transform: uppercase;
-  text-align: center;
-  color: #000;
-  cursor: pointer;
-  border: 3px solid;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
 }
 
-#btn1:active {
+a{
+  position: relative;
+  padding: 3px 10px; 
+  border: 2px solid #ffffff;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-style: normal;
+    z-index: 3;
+}
+
+a::before {
+  content: '';
+  position: relative;
+  top: 6px;
+  left: -2px;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: -2px;
+  height: calc(100% + 5px);
+  width: calc(100% - 12px);
+  background-color: #111111;
+  transition: 0.3s cubic-bezier(0.14, 0.88, 0.57, 1.69);
+  transition-delay: 0.1s;
+}
+a:hover::after {
+  transform: scaleX(0);
+}
+a span {
+  position: relative;
+  z-index: 99;
+}
+
+p {
+  text-align: center;
+  color: white;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 7px;
+  opacity : 0.5;
+  padding-top : 15px;
+}
+/* toute la jaquette */
+.wrapper{
+  max-width: 37em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.image-container{
+  width: 400px;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img{
+  width: 100%;
+  display:block;
+  margin: auto;
+  border-radius: 2em;
+  height: auto;
+}
+
+.content{
+  border-radius: 2em;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  position: absolute;
+  padding: 0rem;
+  background: rgb(0 0 0 / 60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+  transition: 0.5s;
+  box-shadow:  9px 1em 1em 1px rgb(6 6 6);
+
+}
+.content:hover{
+  opacity: 1;
+}
+.content h2{
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 25px;  
+  color: #E0DFD6;
+  margin: -4%;
+  text-align: center;
+
+}
+
+#movieYear{
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 17px;
+  margin : -1%;
+  color: #E0DFD6;
+  text-align: center;
+}
+
+
+.content h3 {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 17px;
+  margin : -1%;
+  color: #E0DFD6;
+  text-align: center;
+}
+.content h4{
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  color: #E0DFD6;
+  margin: 2%;
+  text-align: center;
+}
+.content p{
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 14px;
+  color: #E0DFD6;
+  margin-bottom: -1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+#movieTrailer{
+
+  transform: translate(0%, 100%);
+
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+letter-spacing: 2px;
+text-decoration: none;
+text-transform: uppercase;
+text-align: center;
+color: #000000;
+background-color: #ffffff;
+cursor: pointer;
+border: 3px solid;
+box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+
+}
+
+#movieTrailer:active {
   box-shadow: 0px 0px 0px 0px;
  
 }
 
-@media (min-width: 768px) {
-  #btn1 {
-    padding: 0.25em 0.75em;
-  }
-}
-
-/* toute la jaquette */
-
-.wrapper{
-    display: flex;
-    width: 500%;
-    max-width: 37em;
-    max-height: 70rem;
-
-    position: absolute;
-    margin-left: 33%;
-    margin-right: 33%;
-    top: 20%;
-    bottom: auto;
-}
-
-.image-container{
-    width: 400px;
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-img{
-    width: 100%;
-    display:block;
-    margin: auto;
-    border-radius: 2em;
-}
-.content{
-    border-radius: 2em;
-    width: 100%;
-    height: 100%;
-    top:0;
-    left:0;
-    position: absolute;
-    padding: 0rem;
-    background: rgba(31, 27, 30, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    opacity: 0;
-    transition: 0.6s;
-    box-shadow: 0 1em 2em rgb(57, 27, 27);
-}
-.content:hover{
-    opacity: 1;
-}
-.content h2{
-    font-size: 30px;
-    color: #E0DFD6;
-    margin: -1rem;
-    padding: 10px 50px 20px;
-    text-align: center;
-}
-.content h3{
-    font-size: 25px;
-    color: #E0DFD6;
-    margin: 1rem;
-    padding: 10px 50px 20px;
-    text-align: center;
-}
-.content h4{
-    font-size: 20px;
-    color: #E0DFD6;
-    text-align: center;
-    padding: 10px 50px 20px;
-    padding: -1rem;
-}
-.content p{
-    font-size: 16px;
-    color: #E0DFD6;
-    margin-bottom: -1rem;
-    padding: 1rem;
-    padding: 10px 50px 20px;
-    text-align: center;
-}
-
 #movieResume {
-    --max-lines: 2;
-    position: relative;
-    max-height: calc(var(--lh) * var(--max-lines));
-    overflow: hidden;
-  }
+  --max-lines: 2;
+  position: relative;
+  max-height: calc(var(--lh) * var(--max-lines));
+  overflow: hidden;
+}
 
 
 /* Les boutons du bas. */
+#secondaryBtn{
+  display: flex;
+  margin-top : 2% ; 
+  margin-left: auto;
+  margin-right: auto;
+  align-items:center;
+  justify-content:center;
+  gap: 10%;
+ }
 
-#stream{
-    
-    left: 75%;
-    position: absolute;
-    transform: translate(-100%, 20%);
-    appearance: button;
-    background-color: #000;
-    background-image: none;
-    border: 1px solid #000;
-    border-radius: 4px;
-    box-shadow: #fff 4px 4px 0 0,#000 4px 4px 0 1px;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    
-    font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    margin: 0 5px 10px 0;
-    overflow: visible;
-    padding: 12px 40px;
-    text-align: center;
-    text-transform: none;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-user-select: none;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-#JustWatch {
-    left: 30%;
-    position: absolute;
-    transform: translate(-100%, 20%);
-display: inline-block;
-
-  appearance: button;
-  background-color: #000;
-  background-image: none;
-  border: 1px solid #000;
-  border-radius: 4px;
-  box-shadow: #fff 4px 4px 0 0,#000 4px 4px 0 1px;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  
-  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  margin: 0 5px 10px 0;
-  overflow: visible;
-  padding: 12px 40px;
-  text-align: center;
-  text-transform: none;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-#JustWatch:focus, #stream:focus {
-  text-decoration: none;
-}
-
-#JustWatch:hover, #stream:hover {
-  text-decoration: none;
-}
-
-#JustWatch:active, #stream:active {
-  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
-  outline: 0;
-}
-
-#JustWatch:not([disabled]):active, #stream:not([disabled]):active  {
-  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
-}
-
-@media (min-width: 768px) {
-    #JustWatch, #stream {
-    padding: 12px 50px;
-  }
-}
-
+ 
